@@ -1,0 +1,40 @@
+name: unbound container pre-publish
+
+on:
+  workflow_call:
+    inputs:
+      checkout-ref:
+        description: The branch, tag or SHA to checkout. Defaults to the reference or SHA for that event.
+        required: false
+        type: string
+      dockerfile-dir:
+        description: Dockerfile directory
+        required: false
+        type: string
+    outputs:
+      container-image-name:
+        value: ${{ jobs.unbound-pre-publish.outputs.container-image-name }}
+      unbound-version:
+        value: ${{ jobs.unbound-pre-publish.outputs.unbound-version }}
+
+jobs:
+  unbound-pre-publish:
+    runs-on: ubuntu-latest
+    outputs:
+      container-image-name: ${{ steps.container-image-name.outputs.VALUE }}
+      unbound-version: ${{ steps.unbound-version.outputs.VERSION }}
+    steps:
+      - name: Compose container image name
+        id: container-image-name
+        run: echo "VALUE=${REPO_NAME#container-}" >>$GITHUB_OUTPUT
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.checkout-ref }}
+
+      - name: Find out embedded unbound version
+        id: unbound-version
+        run: echo "VERSION=$(scripts/unbound-version.sh "${{ inputs.dockerfile-dir }}")" >>$GITHUB_OUTPUT
