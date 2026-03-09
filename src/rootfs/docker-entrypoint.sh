@@ -70,7 +70,7 @@ done
 # update dynamic config owner/group in case it is mounted
 chown -R unbound:root /etc/unbound/unbound.conf.d
 
-# update the trust anchor if necessary
-unbound-anchor -a "/usr/share/dnssec-root/trusted-key.key"
+# create/update the trust anchor if necessary
+unbound-anchor || true
 
 exec "$@"
