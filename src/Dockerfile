@@ -4,7 +4,7 @@ FROM alpine:3.24.1@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6ee
 RUN apk add --no-cache build-base openssl-dev expat-dev libevent-dev nghttp2-dev
 
 # renovate: datasource=github-releases depName=NLnetLabs/unbound extractVersion=^release-(?<version>.+)$
-ARG UNBOUND_VERSION=1.24.2
+ARG UNBOUND_VERSION=1.25.2
 
 # hadolint ignore=DL3003
 RUN set -ex; \
