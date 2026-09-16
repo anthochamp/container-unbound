@@ -6,7 +6,10 @@ import { beforeAll } from "vitest";
 
 const srcPath = path.resolve(path.join(__dirname, "..", "src"));
 
-type ContainerRunOptions = Omit<DockerContainerRunOptions, "name" | "context" | "detach">;
+type ContainerRunOptions = Omit<
+	DockerContainerRunOptions,
+	"name" | "context" | "detach"
+>;
 
 export function initSuite() {
 	let pendingRunOptions: ContainerRunOptions = {};
