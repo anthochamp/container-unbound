@@ -70,6 +70,9 @@ done
 # update dynamic config owner/group in case it is mounted
 chown -R unbound:root /etc/unbound/unbound.conf.d
 
+mkdir -p /run/unbound-control
+chown unbound:root /run/unbound-control
+
 # create/update the trust anchor if necessary
 unbound-anchor || true
 
